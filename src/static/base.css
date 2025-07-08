@@ -1,0 +1,10 @@
+/* src/static/base.css */
+/* 禁止选中 */
+.unselectable {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* 标准语法 */
+}
+/* 禁止拖拽 */
+.drag-ban {pointer-events: none;}

@@ -1,0 +1,27 @@
+{
+  "type": "module",
+  "name": "personal-page",
+  "version": "1.0.0",
+  "description": "个人主页",
+  "scripts": {
+    "dev": "gulp default -L",
+    "task": "gulp -T",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/gulp": "^4.0.17",
+    "@types/gulp-connect": "^5.0.9",
+    "gulp": "^5.0.0",
+    "gulp-connect": "^5.7.0"
+  },
+  "keywords": [
+    "个人主页",
+    "个人博客",
+    "学习笔记",
+    "生活感悟",
+    "独立开发者",
+    "代码开源分享"
+  ],
+  "author": "kongyu039",
+  "license": "GPL-3.0"
+}

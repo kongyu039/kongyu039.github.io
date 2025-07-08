@@ -1,0 +1,252 @@
+@font-face {
+  font-family: "My-Facon";
+  src: url("./static/font/Facon.ttf") format("truetype");
+}
+@font-face {
+  font-family: "My-DPIS";
+  src: url("./static/font/Digital-Play-Italic-St.ttf") format("truetype");
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+body .loading-layer {
+  position: absolute;
+  background-color: #6EF3E3;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+  display: flex;
+  /* 使用 flexbox */
+  justify-content: center;
+  /* 水平居中 */
+  align-items: center;
+  /* 垂直居中 */
+  font-size: 24px;
+  /* 设置字体大小（可自定义） */
+}
+body .surround-wrap {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+  /* 旋转动画 */
+}
+body .surround-wrap > .border-layer {
+  background-image: conic-gradient(from 45deg, #FFFFD2 0deg 90deg, #FCBAD3 90deg 180deg, #AA96DA 180deg 270deg, #A8D8EA 270deg 360deg);
+  position: absolute;
+  width: 300%;
+  height: 300%;
+  left: -100%;
+  top: -100%;
+  animation: colorRotate 8s linear infinite;
+}
+@keyframes colorRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+body .dev-logo .img.web-cons-lt,
+body .dev-logo .img.web-cons-rb {
+  position: absolute;
+  object-fit: cover;
+  height: 150px;
+  z-index: 1;
+}
+body .dev-logo .img.web-cons-lt {
+  left: 0;
+  top: 0;
+}
+body .dev-logo .img.web-cons-rb {
+  right: 0;
+  bottom: 0;
+}
+body .root-container {
+  position: absolute;
+  background: url("./static/images/bg1.jpg"), #E9ECFF no-repeat center / 100% 100%;
+  border-radius: 10px;
+  overflow: auto;
+  inset: 20px 30px;
+}
+body .root-container::-webkit-scrollbar {
+  display: none;
+}
+body .root-container .left-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+body .root-container .left-container .img-avatar {
+  box-sizing: border-box;
+  display: block;
+  width: 35%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 0.3rem transparent dashed;
+  margin: 30px auto 10px;
+  transform-style: preserve-3d;
+  /* 保持 3D 变换 */
+  transition: transform 0.6s linear;
+}
+body .root-container .left-container .img-avatar:hover {
+  border: 0.3rem #DFB33A dashed;
+  transform: rotateY(180deg);
+}
+body .root-container .left-container .img-stats-card {
+  display: block;
+  height: 280px;
+  margin: 10px auto 10px;
+}
+body .root-container .left-container .logo-badge {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+body .root-container .left-container .logo-social {
+  display: flex;
+  margin: 20px 0;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+body .root-container .left-container .logo-social > img:hover {
+  scale: 1.05;
+}
+body .root-container .left-container .other-features {
+  display: flex;
+  margin: 20px 0;
+  justify-content: space-around;
+  text-align: center;
+}
+body .root-container .left-container .other-features .features {
+  font-family: "Microsoft YaHei UI", serif;
+  font-weight: bold;
+  font-size: 1.1rem;
+  width: 100px;
+  height: 60px;
+  display: flex;
+  /* 启用 flexbox 布局 */
+  flex-direction: column;
+  /* 垂直排列子元素 */
+  justify-content: center;
+  /* 垂直居中 */
+  align-items: center;
+  /* 水平居中 */
+  padding: 5px;
+  /* 内边距（可选） */
+  box-sizing: border-box;
+  /* 确保 padding 和 border 包含在 width 里 */
+  text-decoration: none;
+  /* 去掉下划线 */
+  color: inherit;
+  background-color: #6DE3DC;
+}
+body .root-container .left-container .other-features .features:first-child {
+  background-color: #DF52D6;
+  color: #F1FFA3;
+}
+body .root-container .left-container .other-features .features:last-child {
+  background-color: #466DB1;
+  color: #83FFA8;
+}
+body .root-container .center-container {
+  margin: 10px 0;
+}
+body .root-container .center-container .my-welcome {
+  font-family: "My-Facon", serif;
+  font-weight: bold;
+  font-size: 4rem;
+  margin-left: 1rem;
+  color: #FFFFFF;
+}
+body .root-container .center-container .my-center {
+  height: 80px;
+}
+body .root-container .center-container .my-center .my-typewriter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #FFFFFF;
+}
+body .root-container .center-container .my-center .my-typewriter .msg {
+  letter-spacing: 0.2rem;
+  word-wrap: break-word;
+  max-width: 70%;
+}
+body .root-container .center-container .my-center .my-typewriter .msg::after {
+  content: "|";
+  color: #FFFFFF;
+  animation: fade-in 1s linear infinite;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    /* 开始时完全透明 */
+  }
+  50% {
+    opacity: 1;
+    /* 中间时半透明 */
+  }
+  100% {
+    opacity: 0;
+    /* 结束时完全不透明 */
+  }
+}
+body .root-container .center-container .my-center .my-card-variant {
+  position: absolute;
+  aspect-ratio: 2/1;
+  right: 0;
+  top: 0;
+  margin: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  /* 半透明背景 */
+  backdrop-filter: blur(7px);
+  /* 模糊效果 */
+  transition: all 0.5s linear;
+}
+body .root-container .center-container .my-center .my-card-variant:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  /* 阴影 */
+}
+body .root-container .center-container .my-center .my-card-variant > .my-calendar {
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+body .root-container .center-container .my-center .my-card-variant > .my-calendar span:first-child {
+  font-family: "My-DPIS", sans-serif;
+  color: #FFFFFF;
+  font-size: 1.25rem;
+}
+body .root-container .center-container .my-center .my-card-variant > .my-calendar span:last-child {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #9B9595;
+}
+body .root-container .center-container .my-center .my-card-variant > .my-svg-frame {
+  height: 65%;
+  position: relative;
+  margin: 0 auto;
+}
+body .root-container .center-container .my-center .my-card-variant > .my-svg-frame > svg {
+  height: 100%;
+  aspect-ratio: 1/1;
+}
