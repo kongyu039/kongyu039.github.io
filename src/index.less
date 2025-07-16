@@ -1,12 +1,22 @@
 // src/index.less
+// 自定义字体1
 @font-face {
   font-family: "My-Facon";
   src: url("./static/font/Facon.ttf") format("truetype");
 }
 
+// 自定义字体2
 @font-face {
   font-family: "My-DPIS";
   src: url("./static/font/Digital-Play-Italic-St.ttf") format("truetype");
+}
+
+// 颜色数组
+@colors: #FF5733, #33FF57, #3357FF, #F1C40F, #9B59B6;
+
+.random-color() {
+  @index: random(1, length(@colors)); // random(1, n) 生成 1 到 n 的随机数
+  background-color: extract(@colors, @index); // 提取颜色
 }
 
 body {
@@ -14,88 +24,194 @@ body {
   height: 100vh;
   overflow: hidden;
   position: relative;
+}
 
-  // 加载层
-  .loading-layer {
-    position: absolute;
-    background-color: #6EF3E3;
-    width: 100vw;
-    height: 100vh;
-    z-index: 99;
+// 加载层
+.loading-layer {
+  position: absolute;
+  background-color: #282C34;
+  width: 100vw;
+  height: 100vh;
+  display: flex; /* 使用 flexbox */
+  justify-content: center; /* 水平居中 */
+  flex-direction: column;
+  align-items: center; /* 垂直居中 */
+  font-size: 24px; /* 设置字体大小（可自定义） */
+  z-index: 99;
+
+  // 加载的svg
+  .loading-svg {
+    height: 25vh;
+    aspect-ratio: 2/1;
     display: flex; /* 使用 flexbox */
     justify-content: center; /* 水平居中 */
     align-items: center; /* 垂直居中 */
-    font-size: 24px; /* 设置字体大小（可自定义） */
+    overflow: hidden;
+
+    svg path {
+      stroke: #D3D3D3;
+      stroke-width: 3;
+      stroke-dasharray: 2026;
+      stroke-dashoffset: 2026;
+      animation: line-anm 3s ease forwards;
+    }
+
+    @keyframes line-anm {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
   }
 
-  // css旋转容器
-  .surround-wrap {
+  // 翻转div
+  .spinner {
+    height: 6vh;
+    aspect-ratio: 1/1;
+    background-color: #CC4800;
+    animation: rotate-plane 1.2s infinite ease-in-out;
+  }
+
+  @keyframes rotate-plane {
+    0% {
+      transform: perspective(6vh) rotateX(0deg) rotateY(0deg);
+    }
+    50% {
+      transform: perspective(6vh) rotateX(-180.1deg) rotateY(0deg);
+    }
+    100% {
+      transform: perspective(6vh) rotateX(-180deg) rotateY(-179.9deg);
+    }
+  }
+}
+
+// banner横幅 回弹效果
+.banner-rebound {
+  will-change: left, top;
+  left: 0;top: 0;
+  position: fixed;
+  z-index: 3;
+  background-color: #0DCAF030;
+  backdrop-filter: blur(1px);
+  height: 15vh;
+  aspect-ratio: 2/1;
+  border-radius: 0.5vh;
+  pointer-events: none;
+  overflow: hidden;
+  animation: w_move 8s linear infinite alternate,
+  h_move 10s linear infinite alternate;
+  @keyframes w_move {
+    to {left: calc(100vw - 30vh);}
+  }
+  @keyframes h_move {
+    to {top: calc(100vh - 15vh);}
+  }
+
+  .container-img {
+    position: relative;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
 
-    > .border-layer {
-      background-image: conic-gradient(from 45deg,
-      #FFFFD2 0deg 90deg,
-      #FCBAD3 90deg 180deg,
-      #AA96DA 180deg 270deg,
-      #A8D8EA 270deg 360deg);
+    > img {
+      width: 100%;
+      height: 100%;
       position: absolute;
-      width: 300%;
-      height: 300%;
-      left: -100%;
-      top: -100%;
-      animation: colorRotate 8s linear infinite;
-    }
-
-    /* 旋转动画 */
-    @keyframes colorRotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-  }
-
-  // 开发logo
-  .dev-logo {
-    .img.web-cons-lt, .img.web-cons-rb {
-      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
       object-fit: cover;
-      height: 150px;
-      z-index: 1;
-    }
+      transition: opacity 0.3s ease;
 
-    .img.web-cons-lt {
-      left: 0;top: 0;
-    }
-
-    .img.web-cons-rb {
-      right: 0;bottom: 0;
+      &.active {
+        opacity: 1;
+      }
     }
   }
 
-  // 根容器
-  .root-container {
-    // display: none;
+  .fragment-img {
+    width: 100%;
+    height: 100%;
     position: absolute;
-    background: url("./static/images/bg1.jpg"), #E9ECFF no-repeat center / 100% 100%;
-    border-radius: 10px;
-    overflow: auto;
-    inset: 20px 30px;
+    left: 0;
+    top: 0;
+    z-index: 1;
 
-    &::-webkit-scrollbar {
-      display: none;
+    .fragment {
+      position: absolute;
+      // outline: 1px solid red;
+      transition: opacity 1s ease;
     }
+  }
+}
 
-    // 左容器
-    .left-container {
-      // background-color: #FD7237B0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
+// css旋转容器
+.surround-wrap {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 
-      // 个人-头像
+  > .border-layer {
+    background-image: conic-gradient(from 45deg,
+    #FFFFD2 0deg 90deg,
+    #FCBAD3 90deg 180deg,
+    #AA96DA 180deg 270deg,
+    #A8D8EA 270deg 360deg);
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    left: -100%;
+    top: -100%;
+    animation: colorRotate 20s linear infinite;
+  }
+
+  /* 旋转动画 */
+  @keyframes colorRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+}
+
+// 开发logo
+.dev-logo {
+  .img.web-cons-lt, .img.web-cons-rb {
+    position: absolute;
+    object-fit: cover;
+    z-index: 2;
+  }
+
+  .img.web-cons-lt {
+    height: 150px;
+    left: 0;top: 0;
+  }
+
+  .img.web-cons-rb {
+    height: 125px;
+    right: 0;bottom: 0;
+  }
+}
+
+// 根容器
+.root-container {
+  // display: none;
+  position: absolute;
+  background: url("./static/images/bg2.jpg"), #E9ECFF no-repeat center / 100% 100%;
+  border-radius: 10px;
+  overflow: auto;
+  inset: 20px 30px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  // 左容器
+  .left-container {
+    // background-color: #FD7237B0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    // 个人-头像
+    .logo-avatar {
       .img-avatar {
         box-sizing: border-box;
         display: block;
@@ -106,85 +222,95 @@ body {
         margin: 30px auto 10px;
         transform-style: preserve-3d; /* 保持 3D 变换 */
         transition: transform 0.6s linear;
+      }
 
+      &:hover > .img-avatar {
+        border: 0.3rem #DFB33A dashed;
+        transform: rotateY(180deg);
+      }
+    }
+
+    // 个人-统计卡
+    .img-stats-card {
+      display: block;
+      max-width: 280px;
+      width: 100%;
+      margin: 10px auto 10px;
+      object-fit: cover;
+    }
+
+    // 个人-徽标
+    .logo-badge {
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    // 社交图标
+    .logo-social {
+      display: flex;
+      margin: 15px 0;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+
+      > img {
         &:hover {
-          border: 0.3rem #DFB33A dashed;
-          transform: rotateY(180deg);
-        }
-      }
-
-      // 个人-统计卡
-      .img-stats-card {
-        display: block;
-        height: 280px;
-        margin: 10px auto 10px;
-      }
-
-      // 个人-徽标
-      .logo-badge {
-        margin: 20px 0;
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-      }
-
-      // 社交图标
-      .logo-social {
-        display: flex;
-        margin: 20px 0;
-        justify-content: space-around;
-        align-items: center;
-        flex-wrap: wrap;
-
-        > img {
-          &:hover {
-            scale: 1.05;
-          }
-        }
-      }
-
-      // 其他功能
-      .other-features {
-        display: flex;
-        margin: 20px 0;
-        justify-content: space-around;
-        text-align: center;
-
-        .features {
-          font-family: "Microsoft YaHei UI", serif;
-          font-weight: bold;
-          font-size: 1.1rem;
-          width: 100px;
-          height: 60px;
-          display: flex; /* 启用 flexbox 布局 */
-          flex-direction: column; /* 垂直排列子元素 */
-          justify-content: center; /* 垂直居中 */
-          align-items: center; /* 水平居中 */
-          padding: 5px; /* 内边距（可选） */
-          box-sizing: border-box; /* 确保 padding 和 border 包含在 width 里 */
-          text-decoration: none; /* 去掉下划线 */
-          color: inherit;
-          background-color: #6DE3DC;
-
-          &:first-child {
-            background-color: #DF52D6;
-            color: #F1FFA3;
-          }
-
-          &:last-child {
-            background-color: #466DB1;
-            color: #83FFA8;
-          }
+          transform: scale(1.05);
+          backface-visibility: hidden; /* 隐藏背面 */
+          transition: transform 0.3s ease; /* 添加过渡效果 */
         }
       }
     }
 
-    // 中容器
-    .center-container {
-      // background-color: #37FDB8B0;
-      margin: 10px 0;
+    // 其他功能
+    .other-features {
+      display: flex;
+      margin: 20px 0;
+      justify-content: space-around;
+      text-align: center;
+
+      .features {
+        font-family: "Microsoft YaHei UI", serif;
+        font-weight: bold;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        width: fit-content;
+        height: 60px;
+        display: flex; /* 启用 flexbox 布局 */
+        flex-direction: column; /* 垂直排列子元素 */
+        justify-content: center; /* 垂直居中 */
+        align-items: center; /* 水平居中 */
+        padding: 5px 15px; /* 内边距（可选） */
+        box-sizing: border-box; /* 确保 padding 和 border 包含在 width 里 */
+        text-decoration: none; /* 去掉下划线 */
+        color: inherit;
+        background-color: #6DE3DC;
+
+        &:first-child {
+          background-color: #DF52D6;
+          color: #F1FFA3;
+        }
+
+        &:last-child {
+          background-color: #466DB1;
+          color: #83FFA8;
+        }
+      }
+    }
+  }
+
+  // 中容器
+  .center-container {
+    // background-color: #37FDB8B0;
+    margin: 5px 0;
+
+    // 上顶部容器
+    .case-top {
+      min-height: 230px;
 
       .my-welcome {
         font-family: "My-Facon", serif;
@@ -194,104 +320,207 @@ body {
         color: #FFFFFF;
       }
 
-      .my-center {
-        height: 80px;
+      .my-typewriter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        font-size: 1.8rem;
+        color: #FFFFFF;
 
-        .my-typewriter {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-family: Arial, sans-serif;
-          font-weight: bold;
-          font-size: 1.8rem;
-          color: #FFFFFF;
+        .msg {
+          letter-spacing: .2rem;
+          word-wrap: break-word;
+          max-width: 70%;
 
-          .msg {
-            letter-spacing: .2rem;
-            word-wrap: break-word;
-            max-width: 70%;
-            &::after {
-              content: "|";
-              color: #FFFFFF;
-              animation: fade-in 1s linear infinite;
+          &::after {
+            content: "|";
+            color: #FFFFFF;
+            animation: fade-in 1s linear infinite;
+          }
+
+          @keyframes fade-in {
+            0% {
+              opacity: 0; /* 开始时完全透明 */
             }
-
-            @keyframes fade-in {
-              0% {
-                opacity: 0; /* 开始时完全透明 */
-              }
-              50% {
-                opacity: 1; /* 中间时半透明 */
-              }
-              100% {
-                opacity: 0; /* 结束时完全不透明 */
-              }
+            50% {
+              opacity: 1; /* 中间时半透明 */
+            }
+            100% {
+              opacity: 0; /* 结束时完全不透明 */
             }
           }
         }
+      }
 
-        .my-card-variant {
-          position: absolute;
-          aspect-ratio: 2/1;
-          right: 0;top: 0;
-          margin: 10px 20px;
+      .my-card-variant {
+        margin: 5px;
+        aspect-ratio: 3/2;
+        // height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.3); /* 半透明背景 */
+        backdrop-filter: blur(3px); /* 模糊效果 */
+        transition: box-shadow 0.5s linear;
+
+        &:hover {box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* 阴影 */}
+
+        > .my-calendar {
+          height: 30%;
           display: flex;
           flex-direction: column;
+          align-items: center;
           justify-content: space-evenly;
-          border-radius: 15px;
-          background: rgba(255, 255, 255, 0.3); /* 半透明背景 */
-          backdrop-filter: blur(7px); /* 模糊效果 */
-          transition: all 0.5s linear;
 
-          &:hover {box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* 阴影 */}
+          span:first-child {
+            font-family: "My-DPIS", sans-serif;
+            color: #FFFFFF;
+            font-size: 1.25rem;
+          }
 
-          > .my-calendar {
-            height: 30%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-evenly;
+          span:last-child {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #F7FFEA;
+          }
+        }
 
-            span:first-child {
-              font-family: "My-DPIS", sans-serif;
+        > .my-svg-frame {
+          height: 65%;
+          margin: 0 auto;
+        }
+      }
+    }
+
+    // 标题
+    .case-title > span {
+      margin-top: 10px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      width: fit-content;
+      border-radius: 5px;
+      background-color: #8BB52F40;
+      color: #FFFFFF;
+      backdrop-filter: blur(3px);
+
+    }
+
+    // 项目item
+    .case-proj {
+      margin-top: 5px;
+      max-height: 540px;
+      position: relative;
+      // 项目背景
+      .case-proj-bg {
+        margin-top: 0.5rem;
+        position: absolute;
+        height: 100%;
+        z-index: 0;
+      }
+
+      // 项目盒子
+      .case-proj-box {
+        max-height: 540px;
+        overflow: scroll;
+        z-index: 1;
+
+        &::-webkit-scrollbar {display: none;}
+
+        > div {
+          // 背景 + 标题
+          > div:first-child {
+
+            position: relative;
+            aspect-ratio: 2 / 1;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-position: center 0;
+            background-size: cover;
+            border-radius: 10px 10px 0 0;
+            background-color: #1081C240;
+            backdrop-filter: blur(3px);
+
+            h4 {
+              text-indent: 0.5rem;
+              font-family: "华文琥珀", sans-serif;
               color: #FFFFFF;
-              font-size: 1.25rem;
-            }
-
-            span:last-child {
-              font-size: 0.9rem;
-              font-weight: bold;
-              color: #9B9595;
+              backdrop-filter: blur(3px);
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              margin-bottom: 0;
+              padding: 5px;
+              width: 100%;
             }
           }
 
-          > .my-svg-frame {
-            height: 65%;
+          // 基础简介
+          > div:nth-child(2) {
+            height: 70px;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
             position: relative;
-            margin: 0 auto;
+            background-color: #BAD0DE80;
+            backdrop-filter: blur(3px);
 
-            > svg {
-              height: 100%;
-              aspect-ratio: 1/1;
-              // animation: svgRotate 7s linear infinite;
+            > span {
+              text-indent: 1rem; /* 文本缩进0.8em */
+              white-space: nowrap; /* 禁止换行 */
+              overflow: hidden; /* 隐藏超出内容 */
+              text-overflow: ellipsis; /* 超出部分显示省略号 */
+              color: #FFFFFF;
             }
-            // .test111{
-            //   transform-origin: center center;
-            //   animation: svgRotate 4s linear infinite;
-            // }
-            // /* 旋转动画 */
-            // @keyframes svgRotate {
-            //   from { transform: rotate(0deg); }
-            //   to { transform: rotate(360deg); }
-            // }
-            // @keyframes svgRotate2 {
-            //   from { transform: matrix(-1 0 -0 -1 215 216) rotate(0deg); }
-            //   to { transform: matrix(-1 0 -0 -1 215 216) rotate(360deg); }
-            // }
-            // @keyframes svgChange {
-            //   from { filter: hue-rotate(0deg); }
-            //   to { filter: hue-rotate(360deg); }
-            // }
+
+            > a {
+              width: fit-content;
+              padding: 5px;
+              background-color: #F871B550;
+              border-radius: 3px;
+              margin-left: 3px;
+              text-decoration: none; /* 去掉下划线 */
+              color: #FFFFFF;
+              font-family: "新宋体", sans-serif;
+              font-weight: bold;
+
+              &:hover {
+                background-color: #9EC95680;
+              }
+            }
+
+            > label {
+              position: absolute;
+              font-family: "新宋体", sans-serif;
+              font-weight: bold;
+              right: 0;
+              bottom: 0;
+              padding: 5px;
+              margin-right: 10px;
+              text-align: center;
+              font-size: 1.2rem;
+              color: #FFFFFF;
+              cursor: pointer;
+            }
+          }
+
+          // 详细描述
+          > div:last-child {
+            border-top: #F2F2F2 2px solid;
+            display: none;
+            background-color: #BAD0DE80;
+            backdrop-filter: blur(3px);
+            transition: height 0.5s ease; /* 设置过渡效果 */
+            border-radius: 0 0 10px 10px;
+            font-size: 0.9rem;
+            text-indent: 0.9rem;
+            letter-spacing: 2px;
+            padding: 1rem;
+            color: #FFFFFF;
           }
         }
       }
@@ -299,3 +528,71 @@ body {
   }
 }
 
+// 动画
+.my-svg-frame svg {
+  overflow: visible;
+
+  &:hover {
+    .svg-path0 {
+      transform-origin: center;
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-15px) translateY(-10px);
+    }
+
+    .svg-path1 {
+      transform-origin: center;
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-45px) translateY(-30px);
+      animation: self-rotate1 3s linear infinite reverse;
+    }
+
+    .svg-path2 {
+      transform-origin: center;
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-90px) translateY(-60px);
+      animation: self-rotate2 4s linear infinite;
+    }
+
+    .svg-path3 {
+      transform-origin: center;
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-135px) translateY(-90px);
+      animation: self-rotate3 3s linear infinite reverse;
+    }
+
+    .svg-path4 {
+      transform-origin: center;
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-180px) translateY(-120px);
+      animation: self-rotate4 4s linear infinite;
+    }
+  }
+
+  @keyframes self-rotate1 {
+    from {
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-45px) translateY(-30px) rotate(0deg);
+    }
+    to {
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-45px) translateY(-30px) rotate(360deg);
+    }
+  }
+  @keyframes self-rotate2 {
+    from {
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-90px) translateY(-60px) rotate(0deg);
+    }
+    to {
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-90px) translateY(-60px) rotate(360deg);
+    }
+  }
+  @keyframes self-rotate3 {
+    from {
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-135px) translateY(-90px) rotate(0deg);
+    }
+    to {
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-135px) translateY(-90px) rotate(360deg);
+    }
+  }
+  @keyframes self-rotate4 {
+    from {
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-180px) translateY(-120px) rotate(0deg);
+    }
+    to {
+      transform: rotate3d(-1, 1, 1, 45deg) translateX(-180px) translateY(-120px) rotate(360deg);
+    }
+  }
+}

@@ -49,6 +49,129 @@ function appendText(selectors, text) {
   div.appendChild(textNode) // 将文本节点添加到div中
 }
 
+/**
+ * 碎片化轮播图
+ * @param {HTMLDivElement} carouselElement
+ */
+function fragmentCarousel(carouselElement) {
+  const containerImgElem = carouselElement.querySelector('.container-img')
+    , fragmentImgElem = carouselElement.querySelector('.fragment-img')
+
+  const carouselConfig = {
+    images: [], fragmentConfig: {
+      rows: 4,// 碎片行数
+      cols: 6,  // 碎片列数
+      maxDisplacement: 80, // 最大位移
+      maxRotation: 180,// 最大旋转角度
+      minScale: 0.3,  // 最小缩小比例
+    }, // 过渡动画持续时间ms
+    transitionDuration: 800,
+  }
+  for (let i = 1; i <= 7; i++) {carouselConfig.images.push(`./static/images/proj-bg${ i }.jpg`)}
+  let currentSlide = 0, autoplayInterval, autoplaySpeed = 3000,
+    isTransitioning = false
+  // 初始化轮播图
+  function initCarousel() {
+    carouselConfig.images.forEach((item, index) => {
+      const img = document.createElement('img')
+      img.className = `slide ${ index === 0 ? 'active' : '' }`
+      img.dataset.index = index + ''
+      img.src = item
+      img.alt = '基础图片碎片化'
+      containerImgElem.appendChild(img)
+    })
+  }
+  /** @param {number} index */
+  function goToSlide(index) {
+    if (index === currentSlide || isTransitioning) return
+    isTransitioning = true // 锁定过渡
+    /** @type {NodeListOf<HTMLImageElement>} */
+    const slides = containerImgElem.querySelectorAll('img')
+    const currentSlideElem = slides[currentSlide]
+    const newSlideElem = slides[index]
+    fragmentImage(currentSlideElem, () => {
+      // 隐藏当前轮播图
+      currentSlideElem.classList.remove('active')
+      newSlideElem.classList.add('active')
+      currentSlide = index
+      isTransitioning = false // 解锁过渡
+    })
+    setTimeout(() => {
+      currentSlideElem.style.opacity = "0"
+      newSlideElem.style.opacity = "1"
+      currentSlide = index
+    }, 0)
+  }
+  /**
+   * @param {HTMLImageElement} img
+   * @param {function} callback
+   */
+  function fragmentImage(img, callback) {
+    if (!img.complete) {
+      if (callback) callback()
+      return
+    }
+    fragmentImgElem.querySelectorAll(".fragment").forEach(elem => {elem.remove()})
+    const naturalHeight = img.naturalHeight, naturalWidth = img.naturalWidth
+    const containerHeight = fragmentImgElem.offsetHeight, containerWidth = fragmentImgElem.offsetWidth
+    const containerRatio = containerWidth / containerHeight
+    const imgRatio = naturalWidth / naturalHeight
+    let displayWidth, displayHeight
+    if (imgRatio > containerRatio) {
+      displayHeight = containerHeight
+      displayWidth = displayHeight * imgRatio
+    } else {
+      displayWidth = containerWidth
+      displayHeight = displayWidth / imgRatio
+    }
+    // 计算偏移
+    const offsetX = (displayWidth - containerWidth) / 2
+    const offsetY = (displayHeight - containerHeight) / 2
+    const {cols, rows, maxDisplacement, maxRotation, minScale} = carouselConfig.fragmentConfig
+    const fragmentWidth = displayWidth / cols
+    const fragmentHeight = displayHeight / rows
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        const fragmentElemItem = document.createElement('div')
+        fragmentElemItem.className = 'fragment'
+        fragmentElemItem.style.left = `${ j * fragmentWidth - offsetX }px`
+        fragmentElemItem.style.top = `${ i * fragmentHeight - offsetY }px`
+        fragmentElemItem.style.width = `${ fragmentWidth }px`
+        fragmentElemItem.style.height = `${ fragmentHeight }px`
+        fragmentElemItem.style.backgroundImage = `url(${ img.src })`
+        fragmentElemItem.style.backgroundSize = `${ displayWidth }px ${ displayHeight }px`
+        fragmentElemItem.style.backgroundPosition = `-${ j * fragmentWidth }px -${ i * fragmentHeight }px`
+        // 初始
+        fragmentElemItem.style.opacity = '1'
+        fragmentElemItem.style.transform = `translate(0,0) rotate(0) scale(1)`
+        fragmentImgElem.appendChild(fragmentElemItem)
+
+        // 延迟动画
+        setTimeout(() => {
+          const randomX = (Math.random() - 0.5) * maxDisplacement
+          const randomY = (Math.random() - 0.5) * maxDisplacement
+          const randomRotation = (Math.random() - 0.5) * maxRotation
+          const randomScale = Math.random() * (1 - minScale) + minScale
+          fragmentElemItem.style.transform = `translate(${ randomX }px,${ randomY }px) rotate(${ randomRotation }deg) scale(${ randomScale })`
+          fragmentElemItem.style.opacity = '0'
+        }, (i * cols + j) * 30)
+      }
+    }
+    const totalDuration = carouselConfig.transitionDuration + rows * cols * 30
+    setTimeout(() => {
+      carouselElement.querySelectorAll('.fragment').forEach(elem => {elem.remove()})
+      if (callback) callback()
+    }, totalDuration)
+  }
+  function startAutoPlay() {
+    autoplayInterval = setInterval(() => {
+      if (!isTransitioning) goToSlide((currentSlide + 1) % carouselConfig.images.length)
+    }, autoplaySpeed)
+  }
+  initCarousel()
+  startAutoPlay()
+}
+
 /** 提供用于操作 LocalStorage 的工具类。 */
 class LocalStorageUtil {
   /**

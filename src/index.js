@@ -5,6 +5,10 @@
   titleHandle()
   welcomeRender()
   typewriterHandle()
+  renderProjList(dbJson.proj_list)
+  listenArrow()
+  timingHandle()
+  fragmentCarousel(document.querySelector('.banner-rebound'))
 })()
 
 /** 标题处理 */
@@ -16,14 +20,13 @@ function titleHandle() {
 }
 
 /** 欢迎语句 渲染 */
-function welcomeRender() {
-  document.querySelector("div.my-welcome").innerText = dbJson.welcome
-}
+function welcomeRender() {document.querySelector("div.my-welcome").innerText = dbJson.welcome}
 
 /** 打字机处理 */
 function typewriterHandle() {
   let index = 0, index2 = 0, addFlag = true
-  const timerId = setInterval(() => {
+  // 打字机定时器
+  setInterval(() => {
     let strLength = dbJson.typewriter[index].length
     if (addFlag) {
       appendText("span.msg", dbJson.typewriter[index][index2])
@@ -40,4 +43,59 @@ function typewriterHandle() {
       }
     }
   }, 180)
+}
+
+/**
+ * 渲染项目目录
+ * @param {ProjItem[]} projList
+ */
+function renderProjList(projList) {
+  /** @type {HTMLElement} */
+  const caseProjBox = document.querySelector(".case-proj-box")
+  let htmlTmpl = ''
+  projList.forEach(projItem => {
+    htmlTmpl += `<div class="col-6 col-lg-3">`
+      + `<div style="background-image: url('${ !projItem.bgUrl ? "" : "./static/images/" + projItem.bgUrl }');">`
+      + `<h4>${ projItem.title }</h4>`
+      + `</div>`
+      + `<div>`
+      + `<span>${ projItem.summary }</span>`
+      + `<a href="${ projItem.href || '#' }">${ projItem.emoji }前往</a>`
+      + `<label><i class="fa fa-arrow-circle-o-down"></i></label>`
+      + `</div>`
+      + `<div class="case-proj-desc">${ projItem.desc }</div>`
+      + `</div>`
+  })
+  caseProjBox.innerHTML = htmlTmpl
+}
+
+/** 监听箭头事件 */
+function listenArrow() {
+  /** @type {HTMLElement} */
+  const caseProjBox = document.querySelector(".case-proj-box")
+  // 事件委托：在父元素上添加 click 事件监听器
+  caseProjBox.addEventListener("click", function (event) {
+    caseProjBox.querySelectorAll(".case-proj-desc").forEach(item => {
+      item.removeAttribute("style")
+    })
+    // 检查点击的元素是否是目标元素
+    if (event.target.matches("i.fa")) {
+      let sibElement = event.target.parentElement.parentElement.nextElementSibling
+      // console.log(sibElement)
+      sibElement.style.display = "block"
+    }
+  })
+}
+
+/** 定时处理 */
+function timingHandle() {
+  /** @type {HTMLSpanElement} */
+  const spanTimeElement = document.querySelector("div.my-calendar>span:first-child")
+    , spanDateElement = document.querySelector("div.my-calendar>span:last-child")
+  setInterval(function () {
+    const formattedDate = new Date().toLocaleDateString('zh-CN', {year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'long'})
+      .replace(/\//g, '年').replace(/日/, '日 ').replace(/(.*?)(年.*?)(日.*?)(\s.*)/, '$1$2$3$4')
+    spanTimeElement.innerText = new Date().toLocaleTimeString('zh-CN')
+    spanDateElement.innerText = formattedDate
+  }, 1000)
 }
