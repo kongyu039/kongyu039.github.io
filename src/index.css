@@ -81,8 +81,14 @@ body {
   border-radius: 0.5vh;
   pointer-events: none;
   overflow: hidden;
-  animation: w_move 8s linear infinite alternate,
-  h_move 10s linear infinite alternate;
+  animation: w_move 16s linear infinite alternate,
+  h_move 20s linear infinite alternate;
+}
+@media screen and (max-width: 768px) {
+  .banner-rebound {
+    animation: w_move 8s linear infinite alternate,
+    h_move 10s linear infinite alternate !important;
+  }
 }
 @keyframes w_move {
   to {
@@ -252,16 +258,15 @@ body {
   /* 确保 padding 和 border 包含在 width 里 */
   text-decoration: none;
   /* 去掉下划线 */
-  color: inherit;
-  background-color: #6DE3DC;
+  background-color: #6DE3DC80;
+  backdrop-filter: blur(2px);
+  color: #FFFFFF;
 }
 .root-container .left-container .other-features .features:first-child {
-  background-color: #DF52D6;
-  color: #F1FFA3;
+  background-color: #DF52D680;
 }
 .root-container .left-container .other-features .features:last-child {
-  background-color: #466DB1;
-  color: #83FFA8;
+  background-color: #466DB180;
 }
 .root-container .center-container {
   margin: 5px 0;
@@ -411,7 +416,7 @@ body {
   backdrop-filter: blur(3px);
 }
 .root-container .center-container .case-proj .case-proj-box > div > div:nth-child(2) > span {
-  text-indent: 1rem;
+  text-indent: 0.5rem;
   /* 文本缩进0.8em */
   white-space: nowrap;
   /* 禁止换行 */
@@ -420,6 +425,7 @@ body {
   text-overflow: ellipsis;
   /* 超出部分显示省略号 */
   color: #FFFFFF;
+  font-size: 0.8rem;
 }
 .root-container .center-container .case-proj .case-proj-box > div > div:nth-child(2) > a {
   width: fit-content;

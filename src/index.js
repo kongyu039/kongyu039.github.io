@@ -6,6 +6,7 @@
   welcomeRender()
   typewriterHandle()
   renderProjList(dbJson.proj_list)
+  renderOtherList(dbJson.other_list)
   listenArrow()
   timingHandle()
   fragmentCarousel(document.querySelector('.banner-rebound'))
@@ -50,7 +51,7 @@ function typewriterHandle() {
  * @param {ProjItem[]} projList
  */
 function renderProjList(projList) {
-  /** @type {HTMLElement} */
+  /** @type {HTMLDivElement} */
   const caseProjBox = document.querySelector(".case-proj-box")
   let htmlTmpl = ''
   projList.forEach(projItem => {
@@ -69,20 +70,36 @@ function renderProjList(projList) {
   caseProjBox.innerHTML = htmlTmpl
 }
 
+/**
+ * 渲染项目目录
+ * @param {OtherItem[]} otherList
+ */
+function renderOtherList(otherList) {
+  /** @type {HTMLDivElement} */
+  const caseOtherBox = document.querySelector(".other-features")
+  let htmlTmpl = ''
+  otherList.forEach(otherItem => {
+    const {title, desc, href} = otherItem
+    htmlTmpl += `<a href="${ href }" title="${ desc }" class="features">${ title }</a>`
+  })
+  caseOtherBox.innerHTML = htmlTmpl
+}
+
 /** 监听箭头事件 */
 function listenArrow() {
-  /** @type {HTMLElement} */
+  /** @type {HTMLDivElement} */
   const caseProjBox = document.querySelector(".case-proj-box")
   // 事件委托：在父元素上添加 click 事件监听器
   caseProjBox.addEventListener("click", function (event) {
     caseProjBox.querySelectorAll(".case-proj-desc").forEach(item => {
-      item.removeAttribute("style")
+      item.removeAttribute('style')
     })
     // 检查点击的元素是否是目标元素
     if (event.target.matches("i.fa")) {
       let sibElement = event.target.parentElement.parentElement.nextElementSibling
-      // console.log(sibElement)
       sibElement.style.display = "block"
+      // sibElement.style.height = 'auto'
+      // sibElement.style.height = sibElement.offsetHeight + 'px'// 获取和设置实际高度
     }
   })
 }

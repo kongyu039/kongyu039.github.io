@@ -97,8 +97,12 @@ body {
   border-radius: 0.5vh;
   pointer-events: none;
   overflow: hidden;
-  animation: w_move 8s linear infinite alternate,
-  h_move 10s linear infinite alternate;
+  @media screen and (max-width: 768px) {
+    animation: w_move 8s linear infinite alternate,
+    h_move 10s linear infinite alternate !important;
+  }
+  animation: w_move 16s linear infinite alternate,
+  h_move 20s linear infinite alternate;
   @keyframes w_move {
     to {left: calc(100vw - 30vh);}
   }
@@ -287,17 +291,16 @@ body {
         padding: 5px 15px; /* 内边距（可选） */
         box-sizing: border-box; /* 确保 padding 和 border 包含在 width 里 */
         text-decoration: none; /* 去掉下划线 */
-        color: inherit;
-        background-color: #6DE3DC;
+        background-color: #6DE3DC80;
+        backdrop-filter: blur(2px);
+        color: #FFFFFF;
 
         &:first-child {
-          background-color: #DF52D6;
-          color: #F1FFA3;
+          background-color: #DF52D680;
         }
 
         &:last-child {
-          background-color: #466DB1;
-          color: #83FFA8;
+          background-color: #466DB180;
         }
       }
     }
@@ -470,11 +473,12 @@ body {
             backdrop-filter: blur(3px);
 
             > span {
-              text-indent: 1rem; /* 文本缩进0.8em */
+              text-indent: 0.5rem; /* 文本缩进0.8em */
               white-space: nowrap; /* 禁止换行 */
               overflow: hidden; /* 隐藏超出内容 */
               text-overflow: ellipsis; /* 超出部分显示省略号 */
               color: #FFFFFF;
+              font-size: 0.8rem;
             }
 
             > a {
@@ -512,6 +516,7 @@ body {
           > div:last-child {
             border-top: #F2F2F2 2px solid;
             display: none;
+            // height: 0;
             background-color: #BAD0DE80;
             backdrop-filter: blur(3px);
             transition: height 0.5s ease; /* 设置过渡效果 */
