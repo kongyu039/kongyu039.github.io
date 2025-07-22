@@ -5,14 +5,19 @@
   "description": "个人主页",
   "scripts": {
     "dev": "gulp default -L",
-    "task": "gulp -T",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp build -L",
+    "clear": "rd /s /q docs",
+    "test": "gulp test -L",
+    "task": "gulp -T"
   },
   "devDependencies": {
     "@types/gulp": "^4.0.17",
     "@types/gulp-connect": "^5.0.9",
     "gulp": "^5.0.0",
-    "gulp-connect": "^5.7.0"
+    "gulp-connect": "^5.7.0",
+    "gulp-csso": "^4.0.1",
+    "gulp-html-minifier-terser": "^7.1.0",
+    "gulp-uglify-es": "^3.0.0"
   },
   "keywords": [
     "个人主页",
