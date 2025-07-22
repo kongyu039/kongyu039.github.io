@@ -154,7 +154,7 @@ function createOtherTasks(itemObjArr) {
     return async () => {
       return new Promise((resolve, reject) => {
         const currentTime = Date.now()
-        gulp.src(item.path)
+        gulp.src(item.path, {encoding: false})
           .pipe(gulp.dest(item.dstDir))
           .on('end', () => {
             // simpleLog(item, {currentTime, type: "Other", count: itemObjArr.length, nowCount: index + 1})
