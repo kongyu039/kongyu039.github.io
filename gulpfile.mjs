@@ -168,14 +168,6 @@ function createOtherTasks(itemObjArr) {
     }
   })
 }
-
-// 启动开发服务器
-const server = async () => {
-  connect.server({root: rootDir, livereload: true, port: 8838, host: '0.0.0.0'}, () => {
-    console.log(`根目录为'${ rootDir }' http://10.168.1.216:8838`)
-    // cp.exec("start http://10.168.1.216:8838")
-  })
-}
 /**
  * 执行gulp任务
  */
@@ -191,7 +183,12 @@ export function build() {
     console.log(`${ new Date().toLocaleTimeString('en-gb') } 总文件数量: ${ totalCount }`)
   })()
 }
-/** 测试任务 */
-export function test() {}
+// 启动开发服务器
+const server = async () => {
+  connect.server({root: rootDir, livereload: true, port: 8838, host: '0.0.0.0'}, () => {
+    console.log(`根目录为'${ rootDir }' http://10.168.1.216:8838`)
+    // cp.exec("start http://10.168.1.216:8838")
+  })
+}
 // 默认任务(服务器) default
 export default server

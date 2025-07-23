@@ -7,6 +7,7 @@
   typewriterHandle()
   renderProjList(dbJson.proj_list)
   renderOtherList(dbJson.other_list)
+  renderSocialList(dbJson.social_list)
   listenArrow()
   timingHandle()
   fragmentCarousel(document.querySelector('.banner-rebound'))
@@ -47,7 +48,7 @@ function typewriterHandle() {
 }
 
 /**
- * 渲染项目目录
+ * 渲染项目个项
  * @param {ProjItem[]} projList
  */
 function renderProjList(projList) {
@@ -71,7 +72,7 @@ function renderProjList(projList) {
 }
 
 /**
- * 渲染项目目录
+ * 渲染其他功能个项
  * @param {OtherItem[]} otherList
  */
 function renderOtherList(otherList) {
@@ -83,6 +84,21 @@ function renderOtherList(otherList) {
     htmlTmpl += `<a href="${ href }" title="${ desc }" class="features">${ title }</a>`
   })
   caseOtherBox.innerHTML = htmlTmpl
+}
+
+/**
+ * 渲染社交媒体个项
+ * @param {SocialItem[]} socialList
+ */
+function renderSocialList(socialList) {
+  /** @type {HTMLDivElement} */
+  const caseSocialBox = document.querySelector(".logo-social")
+  let htmlTmpl = ''
+  socialList.forEach(socialItem => {
+    const {title, href, logoUrl} = socialItem
+    htmlTmpl += `<a href="${ href }" title="${ title }" class="features"><img src="${ logoUrl }" alt="${ title }" /></a>`
+  })
+  caseSocialBox.innerHTML = htmlTmpl
 }
 
 /** 监听箭头事件 */

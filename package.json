@@ -7,7 +7,6 @@
     "dev": "gulp default -L",
     "build": "gulp build -L",
     "clear": "rd /s /q docs",
-    "test": "gulp test -L",
     "task": "gulp -T"
   },
   "devDependencies": {

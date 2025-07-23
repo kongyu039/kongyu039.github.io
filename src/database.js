@@ -15,6 +15,14 @@ const dbJson = {
     {title: "意见反馈<br />云评系统", desc: "意见反馈", href: "#"},
     {title: "更多。。。", desc: "更多", href: "#"},
   ],
+  social_list: [
+    {title: "Github", href:"https://github.com/kongyu039", logoUrl:"./static/images/icon-github.png"},
+    {title: "Email", href:"mailto:kongyu039@163.com", logoUrl:"./static/images/icon-email.png"},
+    {title: "QQ", href:"#", logoUrl:"./static/images/icon-qq.png"},
+    {title: "BiliBili", href:"#", logoUrl:"./static/images/icon-bilibili.png"},
+    {title: "Setting", href:"#", logoUrl:"./static/images/icon-setting.png"},
+    // {title: "DouYin", href:"https://github.com/kongyu039", logoUrl:"./static/images/icon-github.png"},
+  ],
   proj_list: [
     {
       title: "主页", summary: "欢迎来到KongYu039主页", desc: "在这里您可以找到网站的主要信息和导航。快来探索吧！", emoji: "✨", href: ".",

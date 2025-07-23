@@ -7,8 +7,9 @@
  * @property {string} leave_title 离开标签
  * @property {string[]} typewriter 打字机字符串数组
  * @property {string} welcome 欢迎语句
- * @property {OtherItem[]} other_list 项目名单
- * @property {ProjItem[]} proj_list 项目名单
+ * @property {OtherItem[]} other_list 其他元素项
+ * @property {SocialItem[]} social_list 社交元素项
+ * @property {ProjItem[]} proj_list 项目名单项
  */
 
 /**
@@ -25,6 +26,13 @@
  * @typedef {Object} OtherItem 其他元素
  * @property {string} title 标题
  * @property {string} desc 详情
+ * @property {string:'#'} [href] 项目地址
+ */
+
+/**
+ * @typedef {Object} SocialItem 社交元素
+ * @property {string} title 标题
+ * @property {string} logoUrl logo图片地址
  * @property {string:'#'} [href] 项目地址
  */
 
