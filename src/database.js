@@ -5,22 +5,27 @@
 const dbJson = {
   projSummary: "个人觉得还是应该建个网站，记录和分享个人的各种情况，于2025年06月'新建文件夹'，在牛马下班和兼职中忙中偷闲两三小时磕磕绊绊，于2025年07月完成初版，上线时间会在个人博客完成时上线",
   projDrivingForce: "即使是不成熟的尝试，也胜于胎死腹中的策略。",
-  projDesc:"",
+  projDesc: "",
+  projVer: "0.0.1(只有大改才会更新版本) 关于里面要带上 版本号 ",
   leave_title: "ヾ(￣▽￣)Bye~回见\uD83D\uDC4B~", welcome: "Hi, I'M Kong Yu",
   typewriter: ["欢↑迎↑光↑~~临↓↑，Kong Yu 的主页！", "即使是不成熟的尝试，也胜于胎死腹中的策略。", "我们愈是学习，愈觉得自己的贫乏。",
     "生命太短，没有时间留给遗憾，若不是终点，请微笑一直向前。", "乐观者看到条条都是康庄大道，悲观者看到条条都是此路不通。",
-    "人可以不读书，但不能不学习。", "我本就是打工的，只是恰好读了几年书。", "先苦不一定后甜，但是先甜一定是甜了。","孩子回家吧，家里已经供不起你上班了😢。"],
+    "人可以不读书，但不能不学习。", "我本就是打工的，只是恰好读了几年书。", "先苦不一定后甜，但是先甜一定是甜了。",
+    "孩子回家吧，家里已经供不起你上班了😢。"],
   other_list: [
     {title: "站点数据<br />URL统计", desc: "数据统计", href: "#"},
     {title: "意见反馈<br />云评系统", desc: "意见反馈", href: "#"},
     {title: "更多。。。", desc: "更多", href: "#"},
   ],
   social_list: [
-    {title: "Github", href:"https://github.com/kongyu039", logoUrl:"./static/images/icon-github.png"},
-    {title: "Email", href:"mailto:kongyu039@163.com", logoUrl:"./static/images/icon-email.png"},
-    {title: "QQ", href:"#", logoUrl:"./static/images/icon-qq.png"},
-    {title: "BiliBili", href:"#", logoUrl:"./static/images/icon-bilibili.png"},
-    {title: "Setting", href:"#", logoUrl:"./static/images/icon-setting.png"},
+    {title: "Github", href: "https://github.com/kongyu039", logoUrl: "./static/images/icon-github.png"},
+    {title: "Email", href: "mailto:kongyu039@163.com", logoUrl: "./static/images/icon-email.png"},
+    {title: "QQ", href: "#", logoUrl: "./static/images/icon-qq.png"},
+    {title: "BiliBili", href: "#", logoUrl: "./static/images/icon-bilibili.png"},
+    {title: "Setting", href: "#", logoUrl: "./static/images/icon-setting.png"},
+    // 知乎+贴吧+QQ+WX+GitHub+Bilibili+Email+QQ频道+微博+WX公众号+闲鱼+小红书+抖音+CSD博客+博客园等
+    // 多余的联系方式,放关于里面(PC则占半页,移动则占所有屏幕)
+    // 邮箱换成域名邮箱(用阿里/腾讯支持域名邮箱 kongyu@顶域名)
     // {title: "DouYin", href:"https://github.com/kongyu039", logoUrl:"./static/images/icon-github.png"},
   ],
   proj_list: [
@@ -29,8 +34,9 @@ const dbJson = {
       bgUrl: "proj-bg1.jpg",
     },
     {
-      title: "博客", summary: "（新建中）个人博客动态与分享，“杂谈+笔记+日志”形式",
-      desc: "（新建中）在博客中，我将分享最新的见解、经验和想法，类似于“杂谈+笔记+日志”，欢迎阅读！", emoji: "🔮", bgUrl: "proj-bg2.jpg",
+      title: "博客", summary: "(V0.0.1)个人博客动态与分享，“杂谈+笔记+日志”形式",
+      desc: "(V0.0.1)在博客中，我将分享最新的见解、经验和想法，类似于“杂谈+笔记+日志”，欢迎阅读！", emoji: "🔮", bgUrl: "proj-bg2.jpg",
+      href: "https://blog.kongyu039.dpdns.org",
     },
     {
       title: "互联网讨饭", summary: "（等待）上赛博网络，享科技化缘、谢谢大家打赏",

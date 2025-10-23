@@ -1,8 +1,8 @@
 {
   "type": "module",
   "name": "personal-page",
-  "version": "1.0.0",
-  "description": "个人主页",
+  "version": "0.0.1",
+  "description": "KongYu039的个人主页",
   "scripts": {
     "dev": "gulp default -L",
     "build": "gulp build -L",

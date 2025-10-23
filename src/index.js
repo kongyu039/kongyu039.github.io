@@ -81,7 +81,7 @@ function renderOtherList(otherList) {
   let htmlTmpl = ''
   otherList.forEach(otherItem => {
     const {title, desc, href} = otherItem
-    htmlTmpl += `<a href="${ href }" title="${ desc }" class="features">${ title }</a>`
+    htmlTmpl += `<a href="${ href }" title="${ desc }" target="_blank" class="features">${ title }</a>`
   })
   caseOtherBox.innerHTML = htmlTmpl
 }
@@ -96,7 +96,7 @@ function renderSocialList(socialList) {
   let htmlTmpl = ''
   socialList.forEach(socialItem => {
     const {title, href, logoUrl} = socialItem
-    htmlTmpl += `<a href="${ href }" title="${ title }" class="features"><img src="${ logoUrl }" alt="${ title }" /></a>`
+    htmlTmpl += `<a href="${ href }" target="_blank" title="${ title }" class="features"><img src="${ logoUrl }" alt="${ title }" /></a>`
   })
   caseSocialBox.innerHTML = htmlTmpl
 }
