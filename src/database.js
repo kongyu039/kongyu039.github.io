@@ -35,13 +35,14 @@ const dbJson = {
     },
     {
       title: "博客", summary: "(V0.0.1)个人博客动态与分享，“杂谈+笔记+日志”形式",
-      desc: "(V0.0.1)在博客中，我将分享最新的见解、经验和想法，类似于“杂谈+笔记+日志”，欢迎阅读！", emoji: "🔮", bgUrl: "proj-bg2.jpg",
+      desc: "(V0.0.1)在博客中，我将分享最新的见解、经验和想法，类似于“杂谈+笔记+日志”，欢迎阅读！",
+      emoji: "🔮", bgUrl: "proj-bg2.jpg",
       href: "https://blog.kongyu039.dpdns.org",
     },
     {
       title: "互联网讨饭", summary: "（等待）上赛博网络，享科技化缘、谢谢大家打赏",
-      desc: "（不知具体怎么描述，暂时复制点内容填充，后续开发到会明确）傲娇乞讨！(`へ´*)ノ赛博乞讨，打赏即是缘。赛博“云化缘”", emoji: "🍚",
-      bgUrl: "proj-bg3.jpg",
+      desc: "（不知具体怎么描述，暂时复制点内容填充，后续开发到会明确）傲娇乞讨！(`へ´*)ノ赛博乞讨，打赏即是缘。赛博“云化缘”",
+      emoji: "🍚",bgUrl: "proj-bg3.jpg",
     },
     {
       title: "项目和资料", summary: "（等待）个人项目和项目资源以及其他资料分享",
@@ -59,10 +60,10 @@ const dbJson = {
       emoji: "💻", bgUrl: "proj-bg6.jpg",
     },
     {
-      title: "『围观站长』", summary: "（等待）可以围观作者正在“做什么”以及近况",
+      title: "『围观站长』", summary: "可以围观作者正在“做什么”以及近况",
       desc: "（不知道具体怎么描述，暂时复制点内容填充，后续开发到会明确）可以实时的知道本人的'情况'", emoji: "🎭", bgUrl: "proj-bg7.jpg",
       href: "https://gaze.kongyu039.dpdns.org",
     },
-    {title: "更多……", summary: "更多……", desc: "更多……", emoji: "🚀", bgUrl: ""}
-    ],
+    {title: "更多期待……", summary: "更多期待……", desc: "更多期待……", emoji: "🚀", bgUrl: ""}
+  ],
 }
