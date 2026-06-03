@@ -60,8 +60,8 @@ const dbJson = {
       emoji: "💻", bgUrl: "proj-bg6.jpg",
     },
     {
-      title: "『围观站长』", summary: "可以围观作者正在“做什么”以及近况",
-      desc: "（不知道具体怎么描述，暂时复制点内容填充，后续开发到会明确）可以实时的知道本人的'情况'", emoji: "🎭", bgUrl: "proj-bg7.jpg",
+      title: "『围观站长』", summary: "(V0.0.1)可以围观作者正在“做什么”以及近况",
+      desc: "可以实时的知道本人的'情况'", emoji: "🎭", bgUrl: "proj-bg7.jpg",
       href: "https://gaze.kongyu039.dpdns.org",
     },
     {title: "更多期待……", summary: "更多期待……", desc: "更多期待……", emoji: "🚀", bgUrl: ""}
