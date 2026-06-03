@@ -33,15 +33,13 @@ function findFile(dirPath, fileInfo) {
     const files = fs.readdirSync(dirPath)
     files.forEach(item => {
       const fPath = path.join(dirPath, item), stat = fs.statSync(fPath)
-      if (stat.isDirectory() && !fPath.includes('node_modules')) {
-        findFile(fPath, fileInfo)
-      }
+      if (stat.isDirectory() && !fPath.includes('node_modules')) {findFile(fPath, fileInfo)}
       if (stat.isFile()) {
         const srcDir = path.dirname(fPath)
         const dstDir = srcDir.replace(rootDir, distDir)
         /** @type {ItemObj} */
         const pathObj = {path: fPath, srcDir: srcDir, dstDir: dstDir}
-        if (fPath.includes('jsdoc.js')) { return}
+        if (fPath.includes('jsdoc.js')) {return}
         // 获取文件扩展名
         const ext = path.extname(fPath)
         let otherFlag = otherFileExt.includes(ext)
@@ -50,7 +48,7 @@ function findFile(dirPath, fileInfo) {
         // 检查文件名是否以 .min 结尾
         if (baseName.endsWith('.min')) { otherFlag = true }
         // 将路径对象推入对应的数组
-        if (otherFlag) {
+        if (otherFlag || (!ext || ext.trim().length === 0)) {
           fileInfo.other.push(pathObj)
         } else {
           switch (ext) {
@@ -174,12 +172,13 @@ function createOtherTasks(itemObjArr) {
 export function build() {
   findFile(rootDir, fileInfo)
   // window.simplePopup(`${ (Date.now() - time) / 1000 }s CSS 打包完毕`)
-  const totalCount = Object.keys(fileInfo).reduce((sum, key) => sum + fileInfo[key].length, 0), time = new Date(),
-    groupHtmlTasks = createHtmlTasks(fileInfo.html), groupCssTasks = createCssTasks(fileInfo.css),
-    groupJSTasks = createJSTasks(fileInfo.js), groupOtherTasks = createOtherTasks(fileInfo.other)
+  const totalCount = Object.keys(fileInfo).reduce((sum, key) => sum + fileInfo[key].length, 0)
+    , nowTime = new Date()
+    , groupHtmlTasks = createHtmlTasks(fileInfo.html), groupCssTasks = createCssTasks(fileInfo.css)
+    , groupJSTasks = createJSTasks(fileInfo.js), groupOtherTasks = createOtherTasks(fileInfo.other)
   gulp.series(...groupHtmlTasks, ...groupCssTasks, ...groupJSTasks, ...groupOtherTasks, () => {
     // fileCount = 0
-    console.log(`${ new Date().toLocaleTimeString('en-gb') } 执行打包任务完毕 耗时 ${ (Date.now() - time.getTime()) / 1000 }s`)
+    console.log(`${ new Date().toLocaleTimeString('en-gb') } 执行打包任务完毕 耗时 ${ (Date.now() - nowTime.getTime()) / 1000 }s`)
     console.log(`${ new Date().toLocaleTimeString('en-gb') } 总文件数量: ${ totalCount }`)
   })()
 }
